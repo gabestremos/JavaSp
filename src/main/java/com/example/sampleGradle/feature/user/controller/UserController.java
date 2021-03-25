@@ -43,4 +43,19 @@ public class UserController {
         System.out.println(user1);
         userRepository.save(user1);
     }
+
+    @GetMapping(path = "{id}")
+    public User getUser(@PathVariable("id")Long id){
+        return userService.getUser(id);
+    }
+
+    @DeleteMapping(path = "{id}")
+    public void deleteUser(@PathVariable("id")Long id){
+         userService.deleteUser(id);
+    }
+
+    @PatchMapping(path = "{id}")
+    public User updateUser(@PathVariable("id")Long id, @RequestBody UserDto user){
+        return userService.updateUser(id,user);
+    }
 }

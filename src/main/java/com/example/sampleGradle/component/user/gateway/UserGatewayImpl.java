@@ -19,10 +19,6 @@ public class UserGatewayImpl implements UserGateway {
 
     @Override
     public User save(User user) {
-        UserEntity sad=userMapper.toEntity(user);
-        System.out.println("GATEWAY IMPL ENT: "+sad);
-
-        System.out.println("GATEWAY IMPL DOM: "+userMapper.toDomain(sad));
         return userMapper.toDomain(userRepository.save(userMapper.toEntity(user)));
     }
 
@@ -32,5 +28,21 @@ public class UserGatewayImpl implements UserGateway {
                 .stream()
                 .map(user->userMapper.toDomain(user))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public User getUser(Long id) {
+        return userMapper.toDomain(userRepository.getOne(id));
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        User existingUser=getUser(id);
+        userRepository.delete(userMapper.toEntity(existingUser));
+    }
+
+    @Override
+    public User updateUser(User user) {
+        return userMapper.toDomain(userRepository.save(userMapper.toEntity(user)));
     }
 }
